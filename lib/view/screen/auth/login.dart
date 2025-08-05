@@ -2,6 +2,7 @@ import 'package:ecommerce/controller/Textcontroller.dart';
 import 'package:ecommerce/core/class/animatcontroller.dart';
 import 'package:ecommerce/core/constant/colorapp.dart';
 import 'package:ecommerce/core/constant/routs.dart';
+import 'package:ecommerce/core/functions/checkinternet.dart';
 import 'package:ecommerce/core/functions/validatfunc.dart';
 import 'package:ecommerce/view/widget/login/Textsignin.dart';
 import 'package:ecommerce/view/widget/login/loginbutton.dart';
@@ -21,10 +22,14 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> with SingleTickerProviderStateMixin {
+  initdata()async{
+    var res= await checkInternet();
+    print( res);
+  }
   @override
   void initState() {
     super.initState();
-
+  initdata();
     // Ensure fresh ticker every time
     if (Get.isRegistered<AnimatControl>()) {
       Get.delete<AnimatControl>();

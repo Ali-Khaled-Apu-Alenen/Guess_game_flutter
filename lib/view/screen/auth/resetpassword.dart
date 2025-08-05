@@ -1,4 +1,4 @@
-import 'package:ecommerce/controller/checkpassword.dart';
+
 import 'package:ecommerce/controller/reserpasswordcontrol.dart';
 import 'package:ecommerce/core/constant/colorapp.dart';
 import 'package:ecommerce/core/constant/customtheme.dart';
@@ -35,6 +35,7 @@ class ResetPassword extends StatelessWidget {
         children: [
           Text("Reset your password here", style: Get.theme.textTheme.h1),
           TextFormCustom(
+            secureText: true,
             validator: (val) {
               return validateFunc(val!, 5, 25, "password");
             },
@@ -43,6 +44,7 @@ class ResetPassword extends StatelessWidget {
           ),
           SizedBox(height: 30),
           TextFormCustom(
+            secureText: true,
             validator: (val) {
               return validateFunc(val!, 5, 25, "password");
             },
