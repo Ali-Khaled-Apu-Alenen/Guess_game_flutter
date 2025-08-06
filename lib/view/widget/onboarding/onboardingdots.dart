@@ -11,7 +11,8 @@ class OnBoardingDots extends StatelessWidget {
   Widget build(BuildContext context) {
 
     return GetBuilder<OnBoardingControllerImp>(
-      builder: (controller) => Container(
+      builder: (controller) => AnimatedContainer(
+          duration: Duration(milliseconds: 300),
         color: controller.currentchange < 2 ? AppColor.onboardingcolor : AppColor.primarypackgroind,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,

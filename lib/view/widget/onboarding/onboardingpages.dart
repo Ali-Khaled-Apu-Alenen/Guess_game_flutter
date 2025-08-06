@@ -19,7 +19,8 @@ class OnBoardingPages extends GetView<OnBoardingControllerImp> {
       },
       itemCount: onBoardingList.length,
       itemBuilder: (context, i) {
-        return Container(
+        return AnimatedContainer(
+          duration: Duration(milliseconds: 300),
           color:i<2? AppColor.onboardingcolor:AppColor.primarypackgroind,
           child: Column(
             children: [

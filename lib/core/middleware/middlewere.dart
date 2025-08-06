@@ -21,8 +21,6 @@ if(myServices.sharedPreferences.getString("onboarding") == "done") {
       return const RouteSettings(name: AppRoute.login);
     }
     }
-    else{
-      return const RouteSettings(name:"/");
-    }
+  
   }}
 

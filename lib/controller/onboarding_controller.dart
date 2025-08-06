@@ -1,4 +1,5 @@
 import 'package:ecommerce/core/constant/routs.dart';
+import 'package:ecommerce/core/services/services.dart';
 import 'package:ecommerce/data/source/static.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
@@ -10,6 +11,13 @@ abstract class OnboardingController extends GetxController {
 }
 
 class OnBoardingControllerImp extends OnboardingController {
+  MyServices myServices = Get.find();
+    @override
+  void onInit() {
+    pageController = PageController();
+  
+    super.onInit();
+  }
   late PageController pageController;
   int currentchange = 0;
   String buttontext = "Continue";
@@ -25,6 +33,9 @@ class OnBoardingControllerImp extends OnboardingController {
     currentchange++;
     if (currentchange > onBoardingList.length - 1) {
       Get.offAllNamed(AppRoute.login);
+      
+          myServices.sharedPreferences.setString("onboarding", "done");
+        
     }
     pageController.animateToPage(
       currentchange,
@@ -33,11 +44,7 @@ class OnBoardingControllerImp extends OnboardingController {
     );
   }
 
-  @override
-  void onInit() {
-    pageController = PageController();
-    super.onInit();
-  }
+
 
   @override
   updatee() {

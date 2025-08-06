@@ -22,6 +22,7 @@ class _OnBoardingState extends State<OnBoarding>
   @override
   void initState() {
     super.initState();
+      Get.put(OnBoardingControllerImp());
     onBoardingAnimate = Get.put(
       OnBoardingAnimate(ticker: this),
     );
@@ -29,7 +30,7 @@ class _OnBoardingState extends State<OnBoarding>
 
   @override
   Widget build(BuildContext context) {
-    Get.put(OnBoardingControllerImp());
+  
     return SafeArea(
       child: Scaffold(
         body: Column(
@@ -43,7 +44,7 @@ class _OnBoardingState extends State<OnBoarding>
                     children: [
                       OnBoardingDots(),
                       AnimatedContainer(
-                        duration: Duration(seconds: 1),
+                          duration: Duration(milliseconds: 300),
                         width: double.infinity,
 
                         color: controller.currentchange < 2
@@ -51,14 +52,14 @@ class _OnBoardingState extends State<OnBoarding>
                             : AppColor.primarypackgroind,
                         child: OnBoardingButton(),
                       ),
-                      Expanded(
-                        child: Container(
+                      AnimatedContainer(
+                            duration: Duration(milliseconds: 300),
                           height: 80,
                           color: controller.currentchange < 2
                               ? AppColor.onboardingcolor
                               : AppColor.primarypackgroind,
                         ),
-                      ),
+                    
                     ],
                   );
                 },

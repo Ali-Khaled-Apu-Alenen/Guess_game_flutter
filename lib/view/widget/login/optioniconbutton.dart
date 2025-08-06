@@ -9,22 +9,31 @@ final  void Function()? onPressed;
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: Container(
-        width: 180,
-        height: 60,
-        margin: EdgeInsets.only(top: 50,left: 5,right: 5),      
-        child: ElevatedButton(
-          style: ElevatedButton.styleFrom(
-            backgroundColor: AppColor.icontbackprimary,
-          shadowColor: Colors.white,elevation: 0.3,
-          shape: RoundedRectangleBorder(  borderRadius: BorderRadius.circular(20),)
-                  ),
-                  
+      return LayoutBuilder(
+      builder: (context, constraints) {
+        double maxWidth = constraints.maxWidth;
+        double buttonWidth = maxWidth > 400
+            ? 180
+            : (maxWidth / 2) - 20; // fit two buttons with margin
+
+        return Container(
+          width: buttonWidth,
+          height: 60,
+          margin: const EdgeInsets.only(top: 50, left: 5, right: 5),
+          child: ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              backgroundColor: AppColor.icontbackprimary,
+              shadowColor: Colors.white,
+              elevation: 0.3,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(20),
+              ),
+            ),
           onPressed:onPressed,
           child: FaIcon(name, color: AppColor.icontprimary, size: 30),
         ),
-      ),
-    );
+      );
+      },);
+  
   }
 }

@@ -9,7 +9,7 @@ class OnBoardingButton extends GetView<OnBoardingControllerImp> {
 
   @override
   Widget build(BuildContext context) {
-    MyServices myServices = Get.find();
+  
     return Container(
       margin: EdgeInsets.only(top: 60),
 
@@ -22,7 +22,7 @@ class OnBoardingButton extends GetView<OnBoardingControllerImp> {
         color: AppColor.primaryColor,
         onPressed: () {
           controller.next();
-          myServices.sharedPreferences.setString("onboarding", "done");
+      
         },
         child: GetBuilder<OnBoardingControllerImp>(
           builder: (controller) {

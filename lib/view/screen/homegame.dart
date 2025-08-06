@@ -21,11 +21,17 @@ class HomeGame extends StatefulWidget {
 }
 
 class _HomeGameState extends State<HomeGame> {
-  Inputcontroller inputcontroller = Get.put(Inputcontroller());
+late  Inputcontroller inputcontroller;
+  @override
+  void initState() {
+      inputcontroller = Get.put(Inputcontroller());
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        resizeToAvoidBottomInset: true,
         backgroundColor: AppColor.primarypackgroind,
         appBar: AppBar(
           backgroundColor: AppColor.primarypackgroind,
@@ -33,27 +39,28 @@ class _HomeGameState extends State<HomeGame> {
           centerTitle: true,
             leading: PaddingBar(
           onPressed: () {
-            FirebaseAuth.instance.signOut().then((value) {
+            FirebaseAuth.instance.signOut();
               Get.offAllNamed(AppRoute.login);
-            });
+          
         
           },
         ),
         ),
-        body: Expanded(
-          child: Column(
-            children: [
-              Inputs1(),
-              PlayMessage(),
-              SizedBox(height: 20),
-              Loginbutton(
-                txtname: "Check The Word?(reset)",
-                onPressed: () {
-                  inputcontroller.resetGame();
-                },
-              ),
-            ],
-          ),
+        body: SingleChildScrollView(
+          child:  Column(
+              children: [
+                Inputs1(),
+                PlayMessage(),
+                SizedBox(height: 20),
+                Loginbutton(
+                  txtname: "Check The Word?(reset)",
+                  onPressed: () {
+                    inputcontroller.resetGame();
+                  },
+                ),
+              ],
+            ),
+        
         ),
       ),
     );

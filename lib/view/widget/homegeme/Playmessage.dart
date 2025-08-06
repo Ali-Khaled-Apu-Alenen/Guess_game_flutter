@@ -11,7 +11,13 @@ class PlayMessage extends StatefulWidget {
 }
 
 class _PlayMessageState extends State<PlayMessage> {
-  Inputcontroller inputcontroller = Get.put(Inputcontroller());
+late  Inputcontroller inputcontroller;
+  @override
+  void initState() {
+    inputcontroller = Get.put(Inputcontroller());
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return AnimatedBuilder(

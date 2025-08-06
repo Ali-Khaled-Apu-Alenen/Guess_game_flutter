@@ -37,6 +37,7 @@ class _LoginState extends State<Login> with SingleTickerProviderStateMixin {
   @override
   void initState() {
     super.initState();
+    
     initdata();
     // Ensure fresh ticker every time
     if (Get.isRegistered<AnimatControl>()) {
@@ -60,11 +61,6 @@ class _LoginState extends State<Login> with SingleTickerProviderStateMixin {
           backgroundColor: AppColor.primarypackgroind,
           title: Text("login page", style: Get.theme.textTheme.headlineMedium),
           centerTitle: true,
-          leading: PaddingBar(
-            onPressed: () {
-              Get.offNamed(AppRoute.onBoard);
-            },
-          ),
         ),
         body: SingleChildScrollView(
           child: Form(
@@ -83,7 +79,7 @@ class _LoginState extends State<Login> with SingleTickerProviderStateMixin {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    OptionIconButton(
+                Expanded(child:     OptionIconButton(
                       name: FontAwesomeIcons.google,
                       onPressed: () {
                         signInWithGoogle().then((value) {
@@ -94,11 +90,11 @@ class _LoginState extends State<Login> with SingleTickerProviderStateMixin {
                           }
                         });
                       },
-                    ),
-                    OptionIconButton(
+                    ),),
+                  Expanded(child:   OptionIconButton(
                       name: FontAwesomeIcons.facebook,
                       onPressed: () {},
-                    ),
+                    ),)
                   ],
                 ),
                 SizedBox(height: 50),
