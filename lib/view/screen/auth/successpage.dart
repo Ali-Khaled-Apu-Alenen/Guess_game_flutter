@@ -23,10 +23,7 @@ class _SuccesspageState extends State<Successpage>
       backgroundColor: AppColor.primarypackgroind,
       appBar: AppBar(
         backgroundColor: AppColor.primarypackgroind,
-        title: Text(
-          "verify page",
-          style: Get.theme.textTheme.headlineMedium,
-        ),
+      
         centerTitle: true,
         leading: PaddingBar(
           onPressed: () {

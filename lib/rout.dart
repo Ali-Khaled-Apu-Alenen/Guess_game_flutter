@@ -4,6 +4,7 @@ import 'package:ecommerce/view/screen/Onboarding.dart';
 import 'package:ecommerce/view/screen/auth/checkpassword.dart';
 import 'package:ecommerce/view/screen/auth/login.dart';
 import 'package:ecommerce/view/screen/auth/putcode.dart';
+import 'package:ecommerce/view/screen/auth/signcode.dart';
 import 'package:ecommerce/view/screen/auth/signup.dart';
 
 import 'package:ecommerce/view/screen/auth/successpage.dart';
@@ -25,6 +26,7 @@ List<GetPage<dynamic>>? routs =[
   GetPage(name:   AppRoute.successverify, page: ()=> Successpage()),
   GetPage(name:   AppRoute.homepage, page: ()=> HomeGame()),
   GetPage(name:   AppRoute.signverify, page: ()=> SuccessSignPage()),
+  GetPage(name:   AppRoute.signputcode, page: ()=> Singncode()),
 
 ];
 // Map<String, Widget Function(BuildContext)> routs = {

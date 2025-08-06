@@ -1,18 +1,25 @@
+import 'dart:math';
+
 import 'package:ecommerce/controller/Textcontroller.dart';
 import 'package:ecommerce/core/class/animatcontroller.dart';
 import 'package:ecommerce/core/constant/colorapp.dart';
 import 'package:ecommerce/core/constant/routs.dart';
+import 'package:ecommerce/core/functions/My_Dialog.dart';
 import 'package:ecommerce/core/functions/checkinternet.dart';
+import 'package:ecommerce/core/functions/googleauth.dart';
 import 'package:ecommerce/core/functions/validatfunc.dart';
 import 'package:ecommerce/view/widget/login/Textsignin.dart';
 import 'package:ecommerce/view/widget/login/loginbutton.dart';
 import 'package:ecommerce/view/widget/login/optioniconbutton.dart';
 import 'package:ecommerce/view/widget/login/paddingpar.dart';
 import 'package:ecommerce/view/widget/login/textform.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
+
+
 
 class Login extends StatefulWidget {
   const Login({super.key});
@@ -22,14 +29,15 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> with SingleTickerProviderStateMixin {
-  initdata()async{
-    var res= await checkInternet();
-    print( res);
+  initdata() async {
+    var res = await checkInternet();
+    print(res);
   }
+
   @override
   void initState() {
     super.initState();
-  initdata();
+    initdata();
     // Ensure fresh ticker every time
     if (Get.isRegistered<AnimatControl>()) {
       Get.delete<AnimatControl>();
@@ -37,6 +45,10 @@ class _LoginState extends State<Login> with SingleTickerProviderStateMixin {
 
     Get.put(AnimatControl(ticker: this));
   }
+
+
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -73,7 +85,15 @@ class _LoginState extends State<Login> with SingleTickerProviderStateMixin {
                   children: [
                     OptionIconButton(
                       name: FontAwesomeIcons.google,
-                      onPressed: () {},
+                      onPressed: () {
+                        signInWithGoogle().then((value) {
+                          if (value != null) {
+                            Get.offAllNamed(AppRoute.successverify);
+                          } else {
+                            my_Dialog("Google Sign-In failed.");
+                          }
+                        });
+                      },
                     ),
                     OptionIconButton(
                       name: FontAwesomeIcons.facebook,
@@ -90,17 +110,19 @@ class _LoginState extends State<Login> with SingleTickerProviderStateMixin {
                   mycontroller: textControllerimp.email,
                   mylable: "Email",
                 ),
-                GetBuilder<TextControllerimp>(builder: (control)=>TextFormCustom(
-                  secureText: textControllerimp.showpass,
-                  onTapInkwell: () {
-                    textControllerimp.hideorshow();
-                  },
-                  validator: (val) {
-                    return validateFunc(val!, 5, 25, "password");
-                  },
-                  mycontroller: textControllerimp.password,
-                  mylable: "Password",
-                ),),
+                GetBuilder<TextControllerimp>(
+                  builder: (control) => TextFormCustom(
+                    secureText: textControllerimp.showpass,
+                    onTapInkwell: () {
+                      textControllerimp.hideorshow();
+                    },
+                    validator: (val) {
+                      return validateFunc(val!, 5, 25, "password");
+                    },
+                    mycontroller: textControllerimp.password,
+                    mylable: "Password",
+                  ),
+                ),
                 Container(
                   alignment: Alignment.centerRight,
                   child: InkWell(
@@ -116,8 +138,30 @@ class _LoginState extends State<Login> with SingleTickerProviderStateMixin {
                 SizedBox(height: 30),
                 Loginbutton(
                   txtname: "Log in",
-                  onPressed: () {
+                  onPressed: () async {
                     textControllerimp.checkfirst();
+                    try {
+                      final credential = await FirebaseAuth.instance
+                          .signInWithEmailAndPassword(
+                            email: textControllerimp.email.text,
+                            password: textControllerimp.password.text,
+                          );
+                      if (FirebaseAuth.instance.currentUser?.emailVerified ==
+                          true) {
+                        Get.offAllNamed(AppRoute.homepage);
+                          }
+                    } on FirebaseAuthException catch (e) {
+                      if (e.code == 'user-not-found') {
+                        my_Dialog("No user found for that email.");
+                      } else if (e.code == 'invalid-email') {
+                        my_Dialog("Invalid email format.");
+                      } else if (e.code == 'wrong-password') {
+                        my_Dialog("Wrong password provided for that user.");
+                      }else {
+                        my_Dialog("An unexpected error occurred: ${e.message}");
+                      }
+                    }
+
                   },
                 ),
                 SizedBox(height: 30),

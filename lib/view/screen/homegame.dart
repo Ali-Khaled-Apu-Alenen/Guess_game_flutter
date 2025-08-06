@@ -6,6 +6,8 @@ import 'package:ecommerce/view/widget/homegeme/Playmessage.dart';
 import 'package:ecommerce/view/widget/homegeme/inputs.dart';
 import 'package:ecommerce/view/widget/login/loginbutton.dart';
 import 'package:ecommerce/view/widget/login/paddingpar.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 
 import 'package:flutter/material.dart';
 
@@ -31,7 +33,10 @@ class _HomeGameState extends State<HomeGame> {
           centerTitle: true,
             leading: PaddingBar(
           onPressed: () {
-            Get.offNamed(AppRoute.login);
+            FirebaseAuth.instance.signOut().then((value) {
+              Get.offAllNamed(AppRoute.login);
+            });
+        
           },
         ),
         ),

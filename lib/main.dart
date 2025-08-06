@@ -1,30 +1,53 @@
+import 'package:ecommerce/binding/initbinding.dart';
 import 'package:ecommerce/core/constant/colorapp.dart';
 import 'package:ecommerce/core/localization/langcontroller.dart';
 import 'package:ecommerce/core/localization/mytranslation.dart';
 import 'package:ecommerce/core/services/services.dart';
 import 'package:ecommerce/rout.dart';
-import 'package:ecommerce/view/screen/Onboarding.dart';
-import 'package:ecommerce/view/screen/auth/login.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 void main()async {
   WidgetsFlutterBinding.ensureInitialized();
+await Firebase.initializeApp(); 
 await  InitialServices();
   runApp(const MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  @override
+  void initState() {
+      FirebaseAuth.instance
+  .authStateChanges()
+  .listen((User? user) {
+    if (user == null) {
+      print('User is currently signed out!');
+    } else {
+      print('User is signed in!');
+    }
+  });
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
+  
+
+
   LangController controller=  Get.put(LangController());
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       translations: MyTranslation(),
       locale: controller.language,
+      initialBinding: Initbinding(),
       theme: ThemeData(
         fontFamily: "Cairo",
         textTheme: TextTheme(
